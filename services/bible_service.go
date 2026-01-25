@@ -2,7 +2,10 @@ package services
 
 import (
 	"bible/model"
+	"bytes"
+	"encoding/json"
 	"fmt"
+	"os"
 )
 
 type BibleService struct {
@@ -29,7 +32,18 @@ func (bs *BibleService) GetDailyReading(day int) (*model.DayReadings, error) {
 	return dailyReading, nil
 }
 
-func PrintDailyReading(dailyReading *model.DayReadings) {
+func DailyReadingsOutput(dailyReading *model.DayReadings) string {
+	var buf bytes.Buffer
+	for i, reading := range dailyReading.Readings {
+		if i > 0 {
+			buf.WriteString("; ")
+		}
+		buf.WriteString(DailyReadingOutput(&reading))
+	}
+	return buf.String()
+}
+
+func PrintDailyReadings(dailyReading *model.DayReadings) {
 	for i, reading := range dailyReading.Readings {
 		if i > 0 {
 			fmt.Print("; ")
@@ -38,15 +52,44 @@ func PrintDailyReading(dailyReading *model.DayReadings) {
 	}
 }
 
-func PrintReadingEntry(reading *model.Reading) {
-	fmt.Print(reading.Book)
+func PrintAllDailyReadings(dailyReadings []model.DayReadings) {
+	for _, dr := range dailyReadings {
+		fmt.Printf("Day %d: ", dr.Day)
+		PrintDailyReadings(&dr)
+		fmt.Println()
+	}
+}
+
+func DailyReadingOutput(reading *model.Reading) string {
+	var buf bytes.Buffer
+	buf.WriteString(reading.Book)
 	for i, chapter := range reading.Chapters {
 		if i > 0 {
-			fmt.Print(",")
+			buf.WriteString(",")
 		}
-		fmt.Print(" ", chapter.Start)
+		buf.WriteString(" ")
+		buf.WriteString(fmt.Sprintf("%d", chapter.Start))
 		if chapter.End != 0 {
-			fmt.Print("-", chapter.End)
+			buf.WriteString(fmt.Sprintf("-%d", chapter.End))
 		}
 	}
+	return buf.String()
+}
+
+func PrintReadingEntry(reading *model.Reading) {
+	fmt.Print(DailyReadingOutput(reading))
+}
+
+func LoadChronoReadings(filePath string) ([]model.DayReadings, error) {
+	data, err := os.ReadFile(filePath)
+	if err != nil {
+		return nil, err
+	}
+
+	var readings []model.DayReadings
+	if err := json.Unmarshal(data, &readings); err != nil {
+		return nil, err
+	}
+
+	return readings, nil
 }

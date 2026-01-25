@@ -66,7 +66,7 @@ func TestPrintReadingEntry(t *testing.T) {
 }
 
 func TestPrintDailyReading(t *testing.T) {
-	dailyReading := &model.DayReadings{
+	dailyReadings := &model.DayReadings{
 		Day: 1,
 		Readings: []model.Reading{
 			{Book: "Genesis", Chapters: []model.Chapter{{Start: 1, End: 3}}},
@@ -76,7 +76,7 @@ func TestPrintDailyReading(t *testing.T) {
 	}
 
 	output := captureOutput(func() {
-		PrintDailyReading(dailyReading)
+		PrintDailyReadings(dailyReadings)
 	})
 
 	t.Logf("Output: %q", output)
@@ -85,4 +85,28 @@ func TestPrintDailyReading(t *testing.T) {
 	if output != expected {
 		t.Errorf("got %q, want %q", output, expected)
 	}
+}
+
+func TestLoadChronoReadings(t *testing.T) {
+	dailyReadings, err := LoadChronoReadings("../data/chrono.json")
+
+	if err != nil {
+		t.Fatalf("Failed to load chrono readings: %v", err)
+	}
+
+	if len(dailyReadings) == 0 {
+		t.Fatalf("Expected non-empty daily readings")
+	}
+
+	// Simple check for the first day's readings
+	firstDay := dailyReadings[0]
+	if firstDay.Day != 1 {
+		t.Errorf("Expected day 1, got %d", firstDay.Day)
+	}
+
+	if len(firstDay.Readings) == 0 {
+		t.Errorf("Expected readings for day 1, got none")
+	}
+
+	PrintAllDailyReadings(dailyReadings)
 }
