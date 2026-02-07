@@ -2,33 +2,33 @@
   {
     "day": 1,
     "readings": [
-      {"book": "1 Samuel", "chapter": [{"start": 15}]}
+      {"book": "1 Samuel", "chapters": [{"start": 15}]}
     ]
   },
   {
     "day": 2,
     "readings": [
-      {"book": "Psalms", "chapter": [{"start": 6}, {"start": 8, "end": 10}, {"start": 14}, {"start": 16}, {"start": 19}, {"start": 21}]}
+      {"book": "Psalms", "chapters": [{"start": 6}, {"start": 8, "end": 10}, {"start": 14}, {"start": 16}, {"start": 19}, {"start": 21}]}
     ]
   },
   {
     "day": 3,
     "readings": [
-      {"book": "Psalms", "chapter": [{"start": 11}, {"start": 59}]}
+      {"book": "Psalms", "chapters": [{"start": 11}, {"start": 59}]}
     ]
   },
   {
     "day": 4,
     "readings": [
-      {"book": "2 Samuel", "chapter": [{"start": 6, "end": 7}]},
-      {"book": "1 Chronicles", "chapter": [{"start": 17}]}
+      {"book": "2 Samuel", "chapters": [{"start": 6, "end": 7}]},
+      {"book": "1 Chronicles", "chapters": [{"start": 17}]}
     ]
   },
   {
     "day": 5,
     "readings": [
-      {"book": "1 Kings", "chapter": [{"start": 1, "end": 2}]},
-      {"book": "Psalms", "chapter": [{"start": 37}, {"start": 71}, {"start": 94}]}
+      {"book": "1 Kings", "chapters": [{"start": 1, "end": 2}]},
+      {"book": "Psalms", "chapters": [{"start": 37}, {"start": 71}, {"start": 94}]}
     ]
   }
 ]

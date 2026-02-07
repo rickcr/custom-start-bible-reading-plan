@@ -1,16 +1,19 @@
 package main
 
 import (
-	"fmt"
 	"bible/services"
+	"fmt"
+	"os"
 )
 
 func main() {
-	bibleService := services.NewBibleService()
-	dailyReading, err := bibleService.GetDailyReading(1)
+	days, err := services.LoadReadings("data/chrono.json")
 	if err != nil {
-		fmt.Printf("Error getting daily reading: %v\n", err)
+		fmt.Printf("Error loading readings: %v\n", err)
 		return
 	}
-	services.PrintDailyReading(dailyReading)
+
+	day := services.GetReadingsForDay(1, days)
+	services.WriteDay(os.Stdout, &day)
+	fmt.Println()
 }

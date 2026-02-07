@@ -6,12 +6,11 @@ type Chapter struct {
 }
 
 type Reading struct {
-	Book     string  `json:"book"`
-	Chapters []Chapter `json:"chapter,omitempty"`
+	Book     string    `json:"book"`
+	Chapters []Chapter `json:"chapters,omitempty"`
 }
 
 type DayReadings struct {
-	Day         int     `json:"day"`
-	Readings    []Reading `json:"readings"`
+	Day      int       `json:"day"`
+	Readings []Reading `json:"readings"`
 }
-
